@@ -21,6 +21,7 @@ jobs:
         python-version: '3.6'
 
     - name: Install Python dependencies
+      working-directory: Application
       run: |
         python -m venv env
         .\env\Scripts\activate
