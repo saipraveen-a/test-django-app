@@ -23,12 +23,11 @@ jobs:
     - name: Install Python dependencies
       working-directory: Application
       run: |
-        python -m venv env
-        .\env\Scripts\activate
-        pip install -r requirements.txt
-
-    - name: Zip the application files
-      run: Compress-Archive .\* app.zip
+        sudo apt install python3.7-venv
+        python -m venv --copies antenv
+        source antenv/bin/activate
+        pip install setuptools
+        pip install -r ../requirements.txt
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
@@ -36,4 +35,4 @@ jobs:
         app-name: 'test-python-windows-webapp'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_9a1f9293602b476d9f3d5c1f79003931 }}
-        package: '.\app.zip'
+        package: Application
